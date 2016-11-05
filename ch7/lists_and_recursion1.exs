@@ -1,5 +1,5 @@
 defmodule MyList do
-  def mapsum([], _), do: 0
+  def mapsum([], _fun), do: 0
 
   def mapsum([head | tail], fun) do
     fun.(head) + mapsum(tail, fun)
