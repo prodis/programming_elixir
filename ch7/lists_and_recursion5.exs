@@ -21,17 +21,13 @@ defmodule ProdisEnum do
   end
 
   # filter
-  def filter(list, fun) do
-    _filter(list, fun, [])
-  end
+  def filter([], _fun), do: []
 
-  defp _filter([], _fun, result), do: result
-
-  defp _filter([head | tail], fun, result) do
-    if (fun.(head)) do
-      _filter(tail, fun, result ++ [head])
+  def filter([head | tail], fun) do
+    if fun.(head) do
+      [head] ++ filter(tail, fun)
     else
-      _filter(tail, fun, result)
+      filter(tail, fun)
     end
   end
 
@@ -57,17 +53,8 @@ defmodule ProdisEnum do
   end
 
   # take
-  def take(_list, 0), do: []
-
-  def take(list, count) when length(list) <= count, do: list
-
-  def take([head | tail], count) do
-    _take([head], tail, count)
-  end
-
-  defp _take(list, _, count) when length(list) == count, do: list
-
-  defp _take(list, [head | tail], count) do
-    _take(list ++ [head], tail, count)
+  def take(list, count) do
+    {result, _} = split(list, count)
+    result
   end
 end
